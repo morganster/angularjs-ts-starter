@@ -1,4 +1,5 @@
 class HomeController implements ng.IController {
+    welcome:string='hello ng';
     constructor() {
     }
 }
