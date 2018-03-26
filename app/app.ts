@@ -1,5 +1,6 @@
 // app.ts
 import { module, element, bootstrap, ILogService } from 'angular';
+import '@uirouter/angularjs'
 import { AppComponent } from '../app/app.component';
 import { HomeComponent } from '../app/home/home.component';
 import { UserComponent } from '../app/user/user.component';
