@@ -1,8 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+var HtmlWebPackPlugin = require("html-webpack-plugin");
 var nodeModulesDir = path.resolve(__dirname, './node_modules');
-const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+var LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 
@@ -12,13 +13,12 @@ module.exports = {
         ]
     },
     context: __dirname + "",
-    mode: 'development',
+    mode: 'production',
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].bundle.js',
-        path: __dirname + "/dist",
-        sourceMapFilename: 'bundle.map'
-    },
+        filename: '[name].[chunkhash].js',
+        chunkFilename: '[name].[chunkhash].js',
+        path: __dirname + "/dist/"
+        },
     optimization: {
         splitChunks: {
             cacheGroups: {
@@ -42,27 +42,41 @@ module.exports = {
                  options: {}
             },
             {
-                test: /\.html?$/,
+                test: /\.html$/,
                 use: [{
-                    loader: "file-loader?name=[path][name].[ext]"
-                }, {
-                    loader: "extract-loader"
-                }, {
-                    loader: "html-loader"
-                }]
+                        loader: 'file-loader?name=[path][name].[ext]r',
+                        options: {
+                            minimize: true
+                        }
+                    },
+                    {
+                        loader: 'extract-loader'
 
-                
+                    },
+                    {
+                        loader: 'html-loader',
+                        options: { minimize: true }
+
+                    }
+                ],
             },
             {
                 test: /\.less$/,
-                use: [{
-                    loader: "style-loader" // creates style nodes from JS strings
+                use: [MiniCssExtractPlugin.loader,
+                     {
+                    loader: "css-loader", // translates CSS into CommonJS
+                    options: {
+                        minimize: true,
+                        sourceMap : false
+                    }
                 }, {
-                    loader: "css-loader" // translates CSS into CommonJS
-                }, {
-                    loader: "less-loader" // compiles Less to CSS
+                    loader: "less-loader", // compiles Less to CSS
+                    options: {
+                        sourceMap: false
+                    }
                 }]
             },
+            
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "url-loader?limit=10000&mimetype=application/font-woff"
@@ -75,6 +89,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new MiniCssExtractPlugin(),
         new HtmlWebPackPlugin({
             template: __dirname + "/index.ejs",
           })

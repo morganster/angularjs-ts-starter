@@ -6,17 +6,17 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack-dev-server  --env=dev --config webpack.config.js",
-        "dev": "webpack --env=dev --config webpack.config.js --progress --profile --colors"
+        "build-dev": "webpack --env=dev --mode development --config webpack.config.js --progress --profile --colors",
+        "build-prod": "webpack --env=prod --optimize-minimize --mode production --config webpack.config.js --progress --profile --colors"
     },
     "author": "",
-    "license": "GPL-3.0",
+    "license": "M.I.T",
     "devDependencies": {
         "@types/angular": "^1.6.43",
         "@types/angular-ui-router": "^1.1.40",
         "@types/angularjs": "^1.5.14-alpha",
         "@types/jquery": "^3.3.1",
         "@types/node": "^9.6.0",
-        "copy-webpack-plugin": "^4.5.1",
         "core-js": "^2.5.3",
         "css-loader": "^0.28.11",
         "extract-loader": "^2.0.1",
@@ -25,6 +25,7 @@
         "html-webpack-plugin": "^3.1.0",
         "less": "^3.0.1",
         "less-loader": "^4.1.0",
+        "mini-css-extract-plugin": "^0.2.0",
         "style-loader": "^0.20.3",
         "ts-loader": "^4.1.0",
         "tslint": "^5.9.1",

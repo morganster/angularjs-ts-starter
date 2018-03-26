@@ -13,10 +13,12 @@
         "label-position": true,
         "max-line-length": [false],
         "member-ordering": [
-            true,
+            true,{
+            "order": [
             "public-before-private",
             "static-before-instance",
-            "variables-before-functions"
+            "variables-before-functions"]
+            }
         ],
         "no-any": false,
         "no-arg": true,
@@ -61,7 +63,6 @@
         "typedef": [
             true,
             "property-declaration",
-            "member-variable-declaration",
             "call-signature"
         ],
         "variable-name": false,
