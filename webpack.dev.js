@@ -9,18 +9,25 @@ module.exports = {
     entry: {
         app: [
             './app/app.ts'
-        ],
-        vendor: [
-            'angular/angular.js',
-            'angular-ui-router/release/angular-ui-router.js',
-            'angular-sanitize'
         ]
     },
     context: __dirname + "",
+    mode: 'development',
     output: {
         filename: 'bundle.js',
         path: __dirname + "/dist/",
         sourceMapFilename: 'bundle.map'
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            }
+        }
     },
     module: {
         rules: [{
@@ -28,10 +35,10 @@ module.exports = {
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             }, {
-                test: /\.ts$/,
-                enforce: 'pre',
-                loader: 'tslint-loader',
-                options: {}
+                 test: /\.ts$/,
+                 enforce: 'pre',
+                 loader: 'tslint-loader',
+                 options: {}
             },
             {
                 test: /\.html$/,
@@ -73,7 +80,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendors.js' }),
         new CopyWebpackPlugin([{ from: './app/index.html', to: './index.html' }])
     ],
     resolve: {
