@@ -5,13 +5,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    app: ["./app/app.ts"],
+    app: ["./src/app.ts"],
   },
   mode: "production",
   output: {
-    path: path.resolve(__dirname, "public"),
-    filename: "bundle.js",
-    chunkFilename: "[name].[chunkhash].js",
+    filename: "[name].bundle.js",
+    chunkFilename: "[name].bundle.js",
+    path: __dirname + "/dist",
+    sourceMapFilename: "bundle.map",
   },
   optimization: {
     splitChunks: {
@@ -27,14 +28,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /\.ts$/,
-        enforce: "pre",
-        loader: "tslint-loader",
+        exclude: /(node_modules)/,
+        loader: "swc-loader",
         options: {},
       },
       {
@@ -56,28 +52,31 @@ module.exports = {
         ],
       },
       {
-        test: /\.less$/,
+        test: /\.(scss)$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader", // translates CSS into CommonJS
+            loader: "css-loader",
             options: {
-              minimize: true,
+              modules: true,
               sourceMap: false,
             },
           },
-          {
-            loader: "less-loader", // compiles Less to CSS
-            options: {
-              sourceMap: false,
-            },
-          },
+          "sass-loader",
         ],
       },
 
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff",
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              mimetype: "application/font-woff",
+            },
+          },
+        ],
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -95,7 +94,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    static: "./dist",
     compress: true,
     port: 9001,
   },

@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap");
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+app-component {
+  .app {
+    &__nav {
+      display: flex;
+
+      &__list {
+        display: flex;
+        width: 100%;
+        list-style-type: none;
+        justify-content: space-around;
+      }
+    }
+  }
+}

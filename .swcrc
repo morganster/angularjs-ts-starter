@@ -1,0 +1,20 @@
+{
+  "env": {
+    "targets": "> 0.25%, not dead"
+  },
+  "jsc": {
+    "minify": {
+      "compress": true
+    },
+    "externalHelpers": true,
+    "target": "es2015",
+    "parser": {
+      "syntax": "typescript",
+      "dynamicImport": false
+    },
+    "transform": {
+      "optimizer": { "globals": { "vars": { "__DEBUG__": "true" } } }
+    }
+  },
+  "sourceMaps": true
+}

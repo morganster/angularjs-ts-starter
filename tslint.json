@@ -4,7 +4,7 @@
     "curly": true,
     "eofline": true,
     "forin": true,
-    "indent": [true, 4],
+    "indent": [true, 2],
     "interface-name": [true],
     "jsdoc-format": true,
     "label-position": true,

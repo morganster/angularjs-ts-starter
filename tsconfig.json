@@ -1,10 +1,11 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": false,
-        "module": "commonjs",
-        "target": "es5",
-        "allowJs": true
-    }
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": true,
+    "typeRoots": ["src/types"]
+  }
 }

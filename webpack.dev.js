@@ -1,10 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    app: ["./app/app.ts"],
+    app: ["./src/app.ts"],
   },
   context: __dirname + "",
   mode: "development",
@@ -28,14 +29,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /\.ts$/,
-        enforce: "pre",
-        loader: "tslint-loader",
+        exclude: /(node_modules)/,
+        loader: "swc-loader",
         options: {},
       },
       {
@@ -53,22 +49,29 @@ module.exports = {
         ],
       },
       {
-        test: /\.less$/,
+        test: /\.(scss)$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
-            loader: "style-loader", // creates style nodes from JS strings
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
           },
-          {
-            loader: "css-loader", // translates CSS into CommonJS
-          },
-          {
-            loader: "less-loader", // compiles Less to CSS
-          },
+          "sass-loader",
         ],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff",
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              mimetype: "application/font-woff",
+            },
+          },
+        ],
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -80,12 +83,13 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: __dirname + "/index.ejs",
     }),
+    new MiniCssExtractPlugin(),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    static: "./dist",
     compress: true,
     port: 9001,
   },
