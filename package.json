@@ -24,7 +24,7 @@
     "html-loader": "3.0.*",
     "html-webpack-plugin": "5.5.*",
     "mini-css-extract-plugin": "2.4.*",
-    "node-sass": "6.0.*",
+    "node-sass": "7.0.*",
     "sass-loader": "12.3.*",
     "style-loader": "3.3.*",
     "swc-loader": "0.1.*",
